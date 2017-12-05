@@ -6,9 +6,11 @@ import random
 
 
 def main():
+
     print("loading cooccurrence matrix")
     with open('cooc.pkl', 'rb') as f:
         cooc = pickle.load(f)
+
     print("{} nonzero entries".format(cooc.nnz))
 
     nmax = 100

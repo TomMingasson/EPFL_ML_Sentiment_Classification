@@ -3,7 +3,6 @@ from scipy.sparse import *
 import numpy as np
 import pickle
 
-
 def main():
     
     with open('vocab.pkl', 'rb') as f:
@@ -14,7 +13,7 @@ def main():
     data, row, col = [], [], []
     counter = 1
     
-    for fn in ['pos_train.txt', 'neg_train.txt']:
+    for fn in ['train_pos.txt', 'train_neg.txt']:
         
         with open(fn) as f:
             
@@ -36,10 +35,12 @@ def main():
                 
     cooc = coo_matrix((data, (row, col)))
     
-    print("summing duplicates (this can take a while)")
+    print("summing duplicates ... (this can take a while)")
     
     cooc.sum_duplicates()
-    
+	
+    print("summing duplicates FINISHED !")
+
     with open('cooc.pkl', 'wb') as f:
         pickle.dump(cooc, f, pickle.HIGHEST_PROTOCOL)
 
