@@ -3,3 +3,14 @@ data/sample_submission.csv
 *.txt
 *.pkl
 *.zip
+data/twitter_datasets_epfl/__pycache__/pickle_vocab.cpython-36.pyc
+data/twitter_datasets_epfl/build_vocab.sh
+data/twitter_datasets_epfl/build_vocab.sh
+data/twitter_datasets_epfl/build_vocab.sh
+data/twitter_datasets_epfl/build_vocab.sh
+data/twitter_datasets_epfl/build_vocab.sh
+data/twitter_datasets_epfl/unique/full/cut_vocab.sh
+data/twitter_datasets_epfl/unique/short/build_vocab.sh
+data/twitter_datasets_epfl/unique/full/build_vocab.sh
+data/twitter_datasets_epfl/unique/short/cut_vocab.sh
+data/twitter_datasets_epfl/cut_vocab.sh
