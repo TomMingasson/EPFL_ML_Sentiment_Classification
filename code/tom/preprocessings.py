@@ -10,6 +10,7 @@ http://nlp.stanford.edu/projects/glove/preprocess-twitter.rb
 
 import sys
 import re
+import os
 
 FLAGS = re.MULTILINE | re.DOTALL
 
@@ -41,7 +42,6 @@ def process(text):
     eyes = r"[8:=;]"
     nose = r"['`\-]?"
 
-    # function so code less repetitive
     def re_sub(pattern, repl):
         return re.sub(pattern, repl, text, flags=FLAGS)
 
@@ -66,3 +66,23 @@ def process(text):
 
     return text.lower().strip()
 
+def preprocess_txt_file(infilename, outfilename, removeDuplicates=True):
+
+    # holds lines already seen
+    lines_seen = set() 
+    cpt_duplicates = 0
+    outfile = open(outfilename, "w", encoding='utf-8-sig')
+    for line in open(infilename, "r", encoding='utf-8-sig'):
+        if line not in lines_seen or not removeDuplicates: # not a duplicate
+            outfile.write(process(line)) # processed and write
+            outfile.write('\n')
+            lines_seen.add(line)
+        else:
+            cpt_duplicates += 1
+    outfile.close()
+    if removeDuplicates:
+        print("Number of duplicates: ", cpt_duplicates)
+    else: 
+        print("Eventual duplicates not removed.")
+
+    print("(!!! One new empty line added at the end !!!)") 
