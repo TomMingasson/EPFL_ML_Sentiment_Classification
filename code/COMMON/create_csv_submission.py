@@ -8,6 +8,8 @@ def create_csv_submission(ids, y_pred, name):
                name (string name of .csv output file to be created)
     """
     with open(name, 'w') as csvfile:
+        if len(ids) != y_pred.shape[0]:
+            print('ERROR: Ids and predictions must have the same length.')
         fieldnames = ['Id', 'Prediction']
         writer = csv.DictWriter(csvfile, delimiter=",", fieldnames=fieldnames)
         writer.writeheader()
