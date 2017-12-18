@@ -17,6 +17,8 @@ def build_glove_dict (filename):
             for num in line.strip().split(' ')[1:]:
                 vector.append(float(num))
             glove_dict[word] = np.asarray(vector)
+            
+        f.close()
     
     return glove_dict
 
@@ -36,6 +38,8 @@ def build_tweets_matrix (filename):
                 vector.append(word)
             tweets.append(np.asarray(vector))
             
+        f.close();
+    
     return tweets
 
 ## Process the list containing each tweet (arg: tweets) by cutting the end of tweets that are longer than (arg:size) and
