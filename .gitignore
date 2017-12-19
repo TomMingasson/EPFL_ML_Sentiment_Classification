@@ -14,3 +14,5 @@ data/twitter_datasets_epfl/unique/short/build_vocab.sh
 data/twitter_datasets_epfl/unique/full/build_vocab.sh
 data/twitter_datasets_epfl/unique/short/cut_vocab.sh
 data/twitter_datasets_epfl/cut_vocab.sh
+result/doc2vec_short/imdb.d2v
+result/doc2vec_short/imdb.d2v.docvecs.doctag_syn0.npy
