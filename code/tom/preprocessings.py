@@ -1,11 +1,8 @@
 """
-preprocess-twitter.py
-python preprocess-twitter.py "Some random text with #hashtags, @mentions and http://t.co/kdjfkdjf (links). :)"
-Script for preprocessing tweets by Romain Paulus
-with small modifications by Jeffrey Pennington
-with translation to Python by Motoki Wu
-Translation of Ruby script to create features for GloVe vectors for Twitter data.
-http://nlp.stanford.edu/projects/glove/preprocess-twitter.rb
+
+
+
+Adapted from http://nlp.stanford.edu/projects/glove/preprocess-twitter.rb modified by Romain Paulus and Jeffrey Pennington and translated to python by Motoki Wu
 """
 
 import sys
