@@ -4,7 +4,9 @@
 
 
 # setup
+print(' ')
 print("Setup...")
+print(' -----------------------------------------------')
 print(' ')
 # ------------------------------------------------------------------
 
@@ -17,8 +19,9 @@ import time
 import datetime
 
 # preprocess the tweet text files (full version)
-print("Preprocessing")
 print(' ')
+print("Preprocessing...")
+print('-----------------------------------------------')
 # ------------------------------------------------------------------
 
 # training tweet text files
@@ -50,10 +53,18 @@ infilename = 'test_data_no_id.txt'
 outfilename = infilename[:-4] + '_processed.txt'
 preprocess_txt_file(infilename, outfilename, removeDuplicates=False)
 
+# concatenate 
+filenames = ['train_pos_full_processed.txt', 'train_neg_full_processed.txt', 'test_data_no_id_processed.txt']
+with open('all_full_processed.txt', 'w', encoding='utf-8-sig') as outfile:
+    for fname in filenames:
+        with open(fname, 'r', encoding='utf-8-sig') as infile:
+            for line in infile:
+                outfile.write(line)
 
 # read the preprocess tweet tect files
-print("Read preprocessed tweet text files...")
 print(' ')
+print("Read preprocessed tweet text files...")
+print('-----------------------------------------------')
 # ------------------------------------------------------------------
 
 # filenames
@@ -71,36 +82,38 @@ with open(fname_test, 'r', encoding="utf-8-sig") as f:
 
 
 # format tweets to be readable by fastText model
-print("Format tweets...")
 print(' ')
+print("Format tweets...")
+print('-----------------------------------------------')
 # ------------------------------------------------------------------
 
 # format negative tweets
 string_to_add = '__label__-1 '
 with open(fname_neg, 'r', encoding="utf-8-sig") as f:
     lines = [''.join([string_to_add, x.strip(),'\n']) for x in f]   
-with open('mytrain_neg.txt', 'w') as f:
+with open('mytrain_neg.txt', 'w', encoding="utf-8-sig") as f:
     f.writelines(lines) 
 
 # format positive tweets
 string_to_add = '__label__1 '
 with open(fname_pos, 'r', encoding="utf-8-sig") as f:
     lines = [''.join([string_to_add, x.strip(),'\n']) for x in f]   
-with open('mytrain_pos.txt', 'w') as f:
+with open('mytrain_pos.txt', 'w', encoding="utf-8-sig") as f:
     f.writelines(lines) 
     
 # read formated data
 with open('mytrain_pos.txt', 'r', encoding="utf-8-sig") as f1:
     lines1 = f1.readlines()
 with open('mytrain_neg.txt', 'r', encoding ="utf-8-sig") as f2:
-    lines2 = f2.readlines()    
-with open('train_all.txt', 'w') as f:
+    lines2 = f2.readlines()
+with open('train_all.txt', 'w', encoding="utf-8-sig") as f:
     f.writelines(lines1)
     f.writelines(lines2)
-    
+
 # fastText
-print("FastText...")
 print(' ')
+print("FastText...")
+print('-----------------------------------------------')
 # ------------------------------------------------------------------
 
 # init: build a cbow model
@@ -119,8 +132,9 @@ labels = classifier.predict(texts)
 y_pred = np.array([int(labels[x][0]) for x in range(len(labels))])
 
 # Submission
-print("Create a submission text file...")
 print(' ')
+print("Create a submission text file...")
+print('-----------------------------------------------')
 # ------------------------------------------------------------------
 # output file name
 i = datetime.datetime.now()
