@@ -31,7 +31,7 @@ def build_glove_dict (filename):
 def build_tweets_matrix (filename):
     
     tweets = []
-    with open(filename, 'r') as f:
+    with open(filename, 'r',encoding="utf8") as f:
         for line in f:
             vector = []
             for word in line.strip().split(' '):
