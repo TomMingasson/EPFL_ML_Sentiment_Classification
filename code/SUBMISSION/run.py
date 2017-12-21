@@ -124,6 +124,12 @@ model = fasttext.cbow('all_full_processed.txt', 'model', ws = 10)
 print("fit...")
 classifier = fasttext.supervised('train_all.txt', 'model', label_prefix='__label__')
 
+
+# read test data
+filename_test = 'test_data_no_id_processed.txt'
+with open(filename_test, 'r', encoding= 'utf-8-sig') as f:
+    texts = f.readlines() 
+
 # predict
 print("predict...")
 labels = classifier.predict(texts)
