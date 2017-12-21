@@ -124,7 +124,6 @@ model = fasttext.cbow('all_full_processed.txt', 'model', ws = 10)
 print("fit...")
 classifier = fasttext.supervised('train_all.txt', 'model', label_prefix='__label__')
 
-
 # read test data
 filename_test = 'test_data_no_id_processed.txt'
 with open(filename_test, 'r', encoding= 'utf-8-sig') as f:
@@ -145,7 +144,10 @@ print('-----------------------------------------------')
 # output file name
 i = datetime.datetime.now()
 name = "sub_" + time.strftime("%d_%m_%Y") +  "_%sh_%smin" % (i.hour, i.minute)
-ids_test = range(1, test_arrays.shape[0]+1)
+ids_test = range(1, len(labels)+1)
 
 # write submission file
 create_csv_submission(ids_test, y_pred, name)
+
+print(name + ".txt has been created.")
+print("run.py finished.)
