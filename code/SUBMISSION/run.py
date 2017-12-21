@@ -150,4 +150,4 @@ ids_test = range(1, len(labels)+1)
 create_csv_submission(ids_test, y_pred, name)
 
 print(name + ".txt has been created.")
-print("run.py finished.)
+print("run.py finished.")
