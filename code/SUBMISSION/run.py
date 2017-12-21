@@ -1,4 +1,11 @@
+## ------------------------------------------------------------------
+# The tweet text files "train_neg_full.txt", "train_pos_full.txt" and "test_data.txt" must be in the same folder as the present script "run.py"
+## ------------------------------------------------------------------
+
+
 # setup
+print("Setup...")
+print(' ')
 # ------------------------------------------------------------------
 
 import fasttext
@@ -10,9 +17,12 @@ import time
 import datetime
 
 # preprocess the tweet text files (full version)
+print("Preprocessing")
+print(' ')
 # ------------------------------------------------------------------
 
 # training tweet text files
+print("Generate preprocessed training tweet text files...")
 
 # train_neg_full
 infilename = 'train_neg_full.txt'
@@ -25,6 +35,7 @@ outfilename = infilename[:-4] + '_processed.txt'
 preprocess_txt_file(infilename, outfilename, removeDuplicates=True)
 
 # test tweet text file
+print("Generate preprocessed test tweet text files...")
 
 # remove id
 outfile = open('test_data_no_id.txt', "w", encoding='utf-8-sig')
@@ -41,6 +52,8 @@ preprocess_txt_file(infilename, outfilename, removeDuplicates=False)
 
 
 # read the preprocess tweet tect files
+print("Read preprocessed tweet text files...")
+print(' ')
 # ------------------------------------------------------------------
 
 # filenames
@@ -58,6 +71,8 @@ with open(fname_test, 'r', encoding="utf-8-sig") as f:
 
 
 # format tweets to be readable by fastText model
+print("Format tweets...")
+print(' ')
 # ------------------------------------------------------------------
 
 # format negative tweets
@@ -84,21 +99,28 @@ with open('train_all.txt', 'w') as f:
     f.writelines(lines2)
     
 # fastText
+print("FastText...")
+print(' ')
 # ------------------------------------------------------------------
 
 # init: build a cbow model
+print("init...")
 model = fasttext.cbow('all_full_processed.txt', 'model', ws = 10)
 
 # fit
+print("fit...")
 classifier = fasttext.supervised('train_all.txt', 'model', label_prefix='__label__')
 
 # predict
+print("predict...")
 labels = classifier.predict(texts)
 
 # format predictions
 y_pred = np.array([int(labels[x][0]) for x in range(len(labels))])
 
 # Submission
+print("Create a submission text file...")
+print(' ')
 # ------------------------------------------------------------------
 # output file name
 i = datetime.datetime.now()
