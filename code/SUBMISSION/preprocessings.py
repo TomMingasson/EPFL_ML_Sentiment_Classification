@@ -97,5 +97,3 @@ def preprocess_txt_file(infilename, outfilename, removeDuplicates=True):
         print("Number of duplicates: ", cpt_duplicates)
     else: 
         print("Eventual duplicates not removed.")
-
-    print("(!!! One new empty line added at the end !!!)") 
