@@ -1,8 +1,7 @@
 """
-
-
-
 Adapted from http://nlp.stanford.edu/projects/glove/preprocess-twitter.rb modified by Romain Paulus and Jeffrey Pennington and translated to python by Motoki Wu
+
+Some modifications were applied, here documented
 """
 
 import sys
@@ -10,6 +9,10 @@ import re
 import os
 
 FLAGS = re.MULTILINE | re.DOTALL
+
+'''
+Added longforms: the truncated words like 'm or 'll will be converted into the full form 'am' or 'will'
+'''
 
 longforms = {}
 longforms[r"'m"] = r" am"
@@ -20,6 +23,7 @@ longforms[r"'re"] = r" are"
 longforms[r"'ve"] = r" have"
 longforms[r"'d"] = r" would"
     
+
 def hashtag(text):
     text = text.group()
     hashtag_body = text[1:]
@@ -62,6 +66,18 @@ def process(text):
     text = re.sub("\s\s+" , " ", text)
 
     return text.lower().strip()
+
+'''
+Added generate text file function, it applies all the preprocessing for these words in order to adapt them to the Stanford GloVe dictionary
+
+Param:
+infilename(str)       : name of file to read
+outfilename(str)      : name of file to write
+removeDuplicates(bool): removal of duplicates true or false
+
+Returns: 
+none
+'''
 
 def preprocess_txt_file(infilename, outfilename, removeDuplicates=True):
 

@@ -1,12 +1,16 @@
-## Extracts a dictionary from the .txt file of GloVe Stanford, words are the keys of the dictionary 
-## that is composed of the features value for each word.
-
-## REMEMBER to set your current directory to the one of .txt file!
-
-## RETURNS: Dictionary
-
 import numpy as np
 
+''' 
+Extracts a dictionary from the .txt file of GloVe Stanford, words are the keys of the dictionary that is composed of the features value for each word.
+REMEMBER to set your current directory to the one of .txt file!
+
+Args:
+filename (str): name of the file to open
+
+Returns:
+dict: extracted glove dictionary
+
+'''
 def build_glove_dict (filename):
   
     glove_dict = {}
@@ -22,12 +26,16 @@ def build_glove_dict (filename):
     
     return glove_dict
 
-## Extracts from a .txt of tweets the list containing each tweet, the tweets are np.arrays of words, type np.strings
-
+'''
+Extracts from a .txt of tweets the list containing each tweet, the tweets are np.arrays of words, type np.strings
 ## REMEMBER to set your current directory to the one of .txt file!
 
-## RETURNS: list of strings arrays
+Args:
+filename (str): name of the file to open
 
+Returns: 
+(list<str>): list of tweets
+'''
 def build_tweets_matrix (filename):
     
     tweets = []
@@ -42,13 +50,16 @@ def build_tweets_matrix (filename):
     
     return tweets
 
-## Process the list containing each tweet (arg: tweets) by cutting the end of tweets that are longer than (arg:size) and
-## zero-padding the ones that are shorter
+'''
+Process the list containing each tweet (arg: tweets) by cutting the end of tweets that are longer than (arg:size) andzero-padding the ones that are shorter
 
-## WARNING: the zero padding may have to be done symmetrically, not only in one end.......boh!
+Args:
+tweets(list<str>): list of tweets to be padded
+size(int): # of words to include in the windowing
 
-## RETURNS: another list of tweets of the same dimension
-
+Returns:
+(list): tweets of the same dimension but padded
+'''
 def tweet_cut_ZP(tweets, size):
     for i in range(len(tweets)):
         if(len(tweets[i]) > size):
@@ -57,3 +68,55 @@ def tweet_cut_ZP(tweets, size):
             tweets[i] = np.append(tweets[i][:], np.asarray( ['0'] * ( size-len(tweets[i]) ) ) )
             
     return tweets
+
+'''
+Creates numerical representation vector of the tweets given the embedding dictionary and normalized using the tfidf method described in the report.
+
+Args:
+words_in_tweet_list(list<str>): list of all tweets
+embedding_dict(dict)          : dictionary of embeddings for each word
+tfidf_dict(dict)              : tfidf dictionary
+stop_word_list(list<str>)     : list of stopwords to include in the preproc
+method_list(str)              : method of preprocessing, if put 'mean' the function will provide the features averaged between the words in the sentence
+
+Returns:
+(numpy array): representartion embeddings of each tweet
+'''
+def build_tweet_vector(words_in_tweet_list, embedding_dict, tfidf_dict, stop_word_list, method_list):
+    
+    # tweet matrix
+    X_tweet = []
+    
+    for word in words_in_tweet_list:
+        
+        if word in embedding_dict and not word in stop_word_list:
+            
+            # read embedding
+            word_vector = embedding_dict[word]
+            
+            # normalize using tfidf
+            if 'tfidf' in method_list:
+                tfidf = tfidf_dict[word][0]*tfidf_dict[word][1]
+                word_vector = word_vector*tfidf
+                
+            # add to tweet matrix
+            X_tweet.append(word_vector)
+    
+    # if non empty tweet matrix
+    if X_tweet:
+        
+        # mean of the word vectors
+        if 'mean' in method_list:
+
+            X_tweet_processed = np.mean(X_tweet, 0)
+
+        else:
+
+            print("Error: no tweet vector computed.")
+            return
+
+    else:
+        print("'" + ' '.join(words_in_tweet_list) + "' is an empty tweet.")
+        X_tweet_processed = []
+    
+    return X_tweet_processed
